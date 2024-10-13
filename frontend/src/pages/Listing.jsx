@@ -20,7 +20,7 @@ export default function Listing() {
         setIsSyncing(true);
         dispatch(syncExcel());
 
-        // Ensure "Syncing..." state lasts for at least 1 second
+        
         await new Promise(resolve => setTimeout(resolve, 1000));
         setIsSyncing(false);
     };
@@ -65,15 +65,22 @@ export default function Listing() {
                         </tr>
                     </thead>
                     <tbody>
-                        {forms.map((form) => (
-                            <tr key={form.id}>
-                                <td className="px-4 py-2 border-b text-left">{form.formType}</td>
-                                <td className="px-4 py-2 border-b text-left">{form.name}</td>
-                                <td className="px-4 py-2 border-b text-left">{form.countryCode}</td>
-                                <td className="px-4 py-2 border-b text-left">{form.phoneNumber}</td>
+                        {Array.isArray(forms) && forms.length > 0 ? (
+                            forms.map((form) => (
+                                <tr key={form.id}>
+                                    <td className="px-4 py-2 border-b text-left">{form.formType}</td>
+                                    <td className="px-4 py-2 border-b text-left">{form.name}</td>
+                                    <td className="px-4 py-2 border-b text-left">{form.countryCode}</td>
+                                    <td className="px-4 py-2 border-b text-left">{form.phoneNumber}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="4" className="px-4 py-2 border-b text-left">No forms available.</td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
+
                 </table>
             </div>
         </Container>
